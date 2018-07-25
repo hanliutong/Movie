@@ -2,6 +2,19 @@
 #include"lnkList.h"
 #include<vector>
 using namespace std;
+/*	*数据结构:
+	*类：
+		Movie	单个电影的类
+		YEAR	按年份统计的数据（对象）
+		TYPE	按类型统计的数据（对象）
+		NATION	按地区统计的数据（对象）
+		LANGUAGE按语言统计的数据（对象）
+
+
+	*散列表：MOVIE[10000]。长度为10000的存储Movie类指针的数组。
+		搜索的实践复杂度为O(1)。因为负载因子很小，采用开地址法解决冲突
+*/
+
 
 int ELFhash(const char *key)
 {
@@ -75,6 +88,70 @@ void f_Award(char* Award, lnkList<char*> &AwardList) {
 		AwardList.append(temp);
 	}
 }
+class cYear
+{
+public:
+	cYear() {};
+	void push(int IDcode, int Year);
+	void get(int Year, int* &IDcodeList);
+	int  length(int Year);     //求表长
+
+private:
+	lnkList<int> Y_2019;
+	lnkList<int> Y_2018;
+	lnkList<int> Y_2017;
+	lnkList<int> Y_2000p;
+	lnkList<int> Y_1990p;
+	lnkList<int> Y_others;
+	
+};
+void cYear::push(int IDcode, int Year) {
+	if (Year == 2019)
+		Y_2019.append(IDcode);
+	else if (Year == 2018)
+		Y_2018.append(IDcode);
+	else if (Year == 2017)
+		Y_2017.append(IDcode);
+	else if (Year >= 2000)
+		Y_2000p.append(IDcode);
+	else if (Year >= 1990)
+		Y_1990p.append(IDcode);
+	else
+		Y_others.append(IDcode);
+}
+
+void cYear::get(int Year, int* &IDcodeList) {
+	if (Year == 2019)
+		Y_2019.travel(IDcodeList);
+	else if (Year == 2018)
+		Y_2018.travel(IDcodeList);
+	else if (Year == 2017)
+		Y_2017.travel(IDcodeList);
+	else if (Year >= 2000)
+		Y_2000p.travel(IDcodeList);
+	else if (Year >= 1990)
+		Y_1990p.travel(IDcodeList);
+	else
+		Y_others.travel(IDcodeList);
+}
+
+int cYear::length(int Year) {
+	if (Year == 2019)
+		return Y_2019.length ();
+	else if (Year == 2018)
+		return Y_2018.length();
+	else if (Year == 2017)
+		return Y_2017.length();
+	else if (Year >= 2000)
+		return Y_2000p.length();
+	else if (Year >= 1990)
+		return Y_1990p.length();
+	else
+		return Y_others.length();
+}
+cYear YEAR;
+
+
 class cNation
 {
 private:
@@ -114,8 +191,7 @@ public:
 	Movie() {
 		IDcode = 0;
 	}
-	Movie(char *name_C, char *name_E, char* date, float* DB, char *Award, char *Nation, char *Type, char *Director, char *Actor, char *Language, char *story, char *comment) {
-		//*name_CHN = *name_C;
+	Movie(char *name_C, char *name_E, char* date, float* DB, char *Award, char *Nation, char *Type, char *Director, char *Actor, char *Language, char *story, char *comment,int ID) {
 		strcpy(name_CHN, name_C);
 		strcpy(name_ENG, name_E);
 		strcpy(Award_char, Award);
@@ -126,10 +202,11 @@ public:
 		strcpy(Language_char, Language);
 		strcpy(Story, story);
 		strcpy(Comment, comment);
-		IDcode = ELFhash(name_C);
+		IDcode = ID;
 		Date = cDate(date);
 		DouBan = *DB;
 		click = 0;
+		YEAR.push(IDcode, getDate_yy());
 
 
 	}
@@ -217,18 +294,32 @@ bool ShowMovie(char* Name_chn) {
 	int temp_ID = ELFhash(Name_chn);
 	if (MOVIE[temp_ID] == NULL)
 		return false;
-	else
-	{
-		Movie M1 = *MOVIE[temp_ID];
-		printf("中文名： %s\nID:%i\n上映日期：%d\n豆瓣评分：%2.1f\n获奖：%s\n地区：%s\n类型：%s\n导演：%s\n主演：%s\n语言：%s\n剧情：%s\n影评：%s\n",
-			M1.GetName_CHN(), M1.GetID(), M1.getDate(), M1.getDB(), M1.getAward(), M1.getNation(), M1.getType(), M1.getDirector(), M1.getActor(), M1.getLanguage(), M1.getStory(), M1.getComment());
-		cout << "\n\n";
-		return true;
+	
+	while (strcmp(MOVIE[temp_ID]->GetName_CHN(),Name_chn) != 0) {
+		temp_ID++;
+		if (MOVIE[temp_ID] == NULL)
+			return false;
 	}
 	
+	Movie M1 = *MOVIE[temp_ID];
+	printf("中文名： %s\nID:%i\n上映日期：%d\n豆瓣评分：%2.1f\n获奖：%s\n地区：%s\n类型：%s\n导演：%s\n主演：%s\n语言：%s\n剧情：%s\n影评：%s\n",
+		M1.GetName_CHN(), M1.GetID(), M1.getDate(), M1.getDB(), M1.getAward(), M1.getNation(), M1.getType(), M1.getDirector(), M1.getActor(), M1.getLanguage(), M1.getStory(), M1.getComment());
+	cout << "\n\n";
+	return true;
 };
-int main() {
-	
+
+bool ShowMovie(int ID) {
+	if (MOVIE[ID] == NULL)
+		return false;
+
+	Movie M1 = *MOVIE[ID];
+	printf("中文名： %s\nID:%i\n上映日期：%d\n豆瓣评分：%2.1f\n获奖：%s\n地区：%s\n类型：%s\n导演：%s\n主演：%s\n语言：%s\n剧情：%s\n影评：%s\n",
+		M1.GetName_CHN(), M1.GetID(), M1.getDate(), M1.getDB(), M1.getAward(), M1.getNation(), M1.getType(), M1.getDirector(), M1.getActor(), M1.getLanguage(), M1.getStory(), M1.getComment());
+	cout << "\n\n";
+	return true;
+};
+
+bool GetData() {
 	char name_chn[256];
 	char name_eng[256];
 	char date[256];
@@ -247,16 +338,41 @@ int main() {
 	if (fp) {
 		while (flag = fscanf(fp, "%[^,],%[^,],%[^,],%f,%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^\n]\n",
 			name_chn, name_eng, date, &DB, award, Nation, Type, Director, Actor, Language, story, comment) != -1) {
-			MOVIE[ELFhash(name_chn)] = new  Movie(name_chn, name_eng, date, &DB, award, Nation, Type, Director, Actor, Language, story, comment);
+			int index = ELFhash(name_chn);
+			while (MOVIE[index]) {
+				index++;
+			}
+			MOVIE[index] = new  Movie(name_chn, name_eng, date, &DB, award, Nation, Type, Director, Actor, Language, story, comment, index);
 		}
 	}
-	else return 1;
+	else return false;
 	fclose(fp);
+	return true;
+}
+
+bool YearList(int Year) {
+	int len = YEAR.length(Year);
+	if (len)
+	{
+		cout << "len = " << len << endl;
+		int* YList = new int[len];
+		YEAR.get(Year, YList);
+		for (int i = 0; i < len; i++)
+		{
+			ShowMovie(YList[i]);
+		}
+		return true;
+
+	}
+	return false;
+}
+int main() {
+	
+	if (!GetData())
+		return 1;
 	char search[256] = { "头号玩家" };
 	ShowMovie(search); 
-	strcpy(search ,  "红海行动" );
-	ShowMovie(search);
-	
+	YearList(2018);
 	system("pause");
 	return 0;
 }

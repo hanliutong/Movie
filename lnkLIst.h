@@ -1,4 +1,4 @@
-//没有头节点，头指针指向第一个数据结点
+//有头节点
 #ifndef DS_LNKLIST_H
 #define DS_LNKLIST_H
 
@@ -18,7 +18,19 @@ public: lnkList();     //构造函数
 		bool  getValue(int p, T& value);
 		bool  getPos(int &p, T value);
 		void  travel();
+		void  travel(T* &List);
 };
+template <class T>
+void  lnkList<T>::travel(T* &List) {
+	Link<T> *current = head->next;
+	int temp_index = 0;
+	while (current)
+	{
+		List[temp_index] = current->data;
+		temp_index++;
+		current = current->next;
+	}
+}
 
 template <class T>
 lnkList<T>::lnkList() {    //构造函数
