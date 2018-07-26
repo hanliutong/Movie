@@ -29,6 +29,12 @@
     <ClInclude Include="Link.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="cType.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="function.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Movie.rc">

@@ -1,3 +1,4 @@
+#pragma once
 #ifndef DS_LINK_H
 #define DS_LINK_H
 #include <iostream>
@@ -19,7 +20,8 @@ public:
 	}
 	Link() {
 		next = NULL;
-	};
+	}
+
 };
 #endif //DS_LINK_H
 

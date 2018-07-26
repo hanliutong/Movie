@@ -1,9 +1,10 @@
 #include<iostream>
 #include"lnkList.h"
-#include<vector>
+#include"function.h"
+#include"cType.h"
 using namespace std;
 /*	*数据结构:
-	*类：
+	*类或对象：
 		Movie	单个电影的类
 		YEAR	按年份统计的数据（对象）
 		TYPE	按类型统计的数据（对象）
@@ -15,22 +16,10 @@ using namespace std;
 		搜索的实践复杂度为O(1)。因为负载因子很小，采用开地址法解决冲突
 */
 
+cType TYPE;
 
-int ELFhash(const char *key)
-{
-	unsigned long h = 0;
-	unsigned long g;
-	while (*key)
-	{
-		h = (h << 4) + *key++;
-		g = h & 0xf0000000L;
-		if (g) h ^= g >> 24;
-		h &= ~g;
-	}
-	return h % 10000;
-}
 
-class cDate {
+class cDate {//Movie类中存储日期的类
 public:
 	int yy;
 	int mm;
@@ -70,24 +59,7 @@ public:
 	}
 };
 
-void f_Award(char* Award, lnkList<char*> &AwardList) {
 
-	int index = 0;
-	int count = 0;
-
-	while (Award[index]) {
-		char* temp = new char;
-		while (Award[index] != '/' && Award[index] != '\0') {
-
-			temp[count++] = Award[index];
-			index++;
-		}
-		temp[index] = '\0';
-		index++;
-		count = 0;
-		AwardList.append(temp);
-	}
-}
 class cYear
 {
 public:
@@ -207,7 +179,7 @@ public:
 		DouBan = *DB;
 		click = 0;
 		YEAR.push(IDcode, getDate_yy());
-
+		TYPE.push(IDcode, Type_char);
 
 	}
 	char* GetName_CHN() {
@@ -263,30 +235,7 @@ public:
 	}
 };
 Movie* MOVIE[10000];
-// class Type{
-// private:
-// 	lnkList<int> DZ_1383;
-// 	lnkList<int> KH_9123;
-// 	lnkList<int> QC_1130;
-// 	lnkList<int> JQ_4553;
-// 	lnkList<int> XJ_439;
-// 	lnkList<int> AQ_5417;
-// 	lnkList<int> JLP_6812;
-// 	lnkList<int> KB_4656;
-// 	lnkList<int> DH_1917;
-// 	lnkList<int> XY_3721;
-// 	lnkList<int> FZ_5507;
-// 	lnkList<int> ZZ_857;
-// 	lnkList<int> GZ_3520;
-// 	lnkList<int> ZN_8849;
-// 	lnkList<int> QT_2475;
-// public:
-// 	Type();
-// 	push(char* Type, int IDcode){
-// 		switch(ELFhash(Type)){
-// 			case 1383
-// 		}
-// 	}
+
 
 
 // };
@@ -319,7 +268,17 @@ bool ShowMovie(int ID) {
 	return true;
 };
 
-bool GetData() {
+bool ShowName(int ID) {
+	if (MOVIE[ID] == NULL)
+		return false;
+	Movie M1 = *MOVIE[ID];
+	printf("中文名： %s\nID:%i\n豆瓣评分：%2.1f\n",
+		M1.GetName_CHN(), M1.GetID(),  M1.getDB());
+	cout << "\n\n";
+	return true;
+};
+
+bool GetData() {//从数据库读取数据
 	char name_chn[256];
 	char name_eng[256];
 	char date[256];
@@ -366,6 +325,24 @@ bool YearList(int Year) {
 	}
 	return false;
 }
+
+
+bool TypeList(char* tpye) {
+	int len = TYPE.length(tpye);
+	if (len)
+	{
+		cout << "len = " << len << endl;
+		int* TList = new int[len];
+		TYPE.get(tpye, TList);
+		for (int i = 0; i < len; i++)
+		{
+			ShowName(TList[i]);
+		}
+		return true;
+
+	}
+	return false;
+}
 int main() {
 	
 	if (!GetData())
@@ -373,6 +350,9 @@ int main() {
 	char search[256] = { "头号玩家" };
 	ShowMovie(search); 
 	YearList(2018);
+	char type[32] = { "科幻" };
+	cout << type <<  ELFhash(type) << endl;
+	TypeList(type);
 	system("pause");
 	return 0;
 }

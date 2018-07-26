@@ -1,4 +1,5 @@
 //有头节点
+#pragma once
 #ifndef DS_LNKLIST_H
 #define DS_LNKLIST_H
 
