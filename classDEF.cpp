@@ -20,9 +20,13 @@ using namespace std;
 */
 
 
-cType TYPE;
-cYear YEAR;
-cNation NATION;
+//cType TYPE;
+//cYear YEAR;
+//cNation NATION;
+
+cYear YEAR;;
+cClass NATION;
+cClass TYPE;
 cClass DIRECTOR;
 
 class cDate {//Movie类中存储日期的类
@@ -259,7 +263,7 @@ bool GetMovieList(cClass Class,char* info) {
 	return false;
 }
 
-bool YearList(int Year) {
+bool GetMovieList(int Year) {
 	int len = YEAR.length(Year);
 	cout << "命中结果 " << len << " 个" << endl;
 	if (len)
@@ -277,41 +281,41 @@ bool YearList(int Year) {
 	return false;
 }
 
-bool TypeList(char* tpye) {
-	int len = TYPE.length(tpye);
-	cout << "命中结果 " << len << " 个" << endl;
-	if (len)
-	{
-		int* TList = new int[len];
-		TYPE.get(tpye, TList);
-		for (int i = 0; i < len; i++)
-		{
-			ShowName(TList[i]);
-		}
-		delete TList;
-		return true;
-
-	}
-	return false;
-}
-
-bool NationList(char* tpye) {
-	int len = NATION.length(tpye);
-	cout << "命中结果 " << len << " 个"<< endl;
-	if (len)
-	{
-		int* TList = new int[len];
-		NATION.get(tpye, TList);
-		for (int i = 0; i < len; i++)
-		{
-			ShowName(TList[i]);
-		}
-		delete TList;
-		return true;
-
-	}
-	return false;
-}
+		//bool TypeList(char* tpye) {
+		//	int len = TYPE.length(tpye);
+		//	cout << "命中结果 " << len << " 个" << endl;
+		//	if (len)
+		//	{
+		//		int* TList = new int[len];
+		//		TYPE.get(tpye, TList);
+		//		for (int i = 0; i < len; i++)
+		//		{
+		//			ShowName(TList[i]);
+		//		}
+		//		delete TList;
+		//		return true;
+		//
+		//	}
+		//	return false;
+		//}
+		//
+		//bool NationList(char* tpye) {
+		//	int len = NATION.length(tpye);
+		//	cout << "命中结果 " << len << " 个"<< endl;
+		//	if (len)
+		//	{
+		//		int* TList = new int[len];
+		//		NATION.get(tpye, TList);
+		//		for (int i = 0; i < len; i++)
+		//		{
+		//			ShowName(TList[i]);
+		//		}
+		//		delete TList;
+		//		return true;
+		//
+		//	}
+		//	return false;
+		//}
 
 int main() {
 	
@@ -324,19 +328,19 @@ int main() {
 
 	int year = 2018;
 	cout << "搜索："<< year <<"年的电影\n";
-	YearList(year);
+	GetMovieList(year);
 
 	char type[32] = { "战争" };
 	cout << "搜索：类型为“" << type << "”的电影\n";
-	TypeList(type);
+	GetMovieList(TYPE, type);
 
 	char nation[32] = { "中国" };
 	cout << "搜索：地区为“" << nation << "”的电影\n";
-	NationList(nation);
+	GetMovieList(NATION, nation);
 
-	char DD[32] = { "林超贤" };
-	cout << "搜索：导演为“" << DD << "”的电影\n";
-	GetMovieList(DIRECTOR,DD);
+	char director[32] = { "林超贤" };
+	cout << "搜索：导演为“" << director << "”的电影\n";
+	GetMovieList(DIRECTOR, director);
 
 	system("pause");
 	return 0;
