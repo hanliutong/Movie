@@ -35,6 +35,15 @@
     <ClInclude Include="function.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="cYear.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cNation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Movie.rc">

@@ -2,6 +2,9 @@
 #include"lnkList.h"
 #include"function.h"
 #include"cType.h"
+#include"cYear.h"
+#include"cNation.h"
+#include"cClass.h"
 using namespace std;
 /*	*数据结构:
 	*类或对象：
@@ -16,8 +19,11 @@ using namespace std;
 		搜索的实践复杂度为O(1)。因为负载因子很小，采用开地址法解决冲突
 */
 
-cType TYPE;
 
+cType TYPE;
+cYear YEAR;
+cNation NATION;
+cClass DIRECTOR;
 
 class cDate {//Movie类中存储日期的类
 public:
@@ -59,84 +65,6 @@ public:
 	}
 };
 
-
-class cYear
-{
-public:
-	cYear() {};
-	void push(int IDcode, int Year);
-	void get(int Year, int* &IDcodeList);
-	int  length(int Year);     //求表长
-
-private:
-	lnkList<int> Y_2019;
-	lnkList<int> Y_2018;
-	lnkList<int> Y_2017;
-	lnkList<int> Y_2000p;
-	lnkList<int> Y_1990p;
-	lnkList<int> Y_others;
-	
-};
-void cYear::push(int IDcode, int Year) {
-	if (Year == 2019)
-		Y_2019.append(IDcode);
-	else if (Year == 2018)
-		Y_2018.append(IDcode);
-	else if (Year == 2017)
-		Y_2017.append(IDcode);
-	else if (Year >= 2000)
-		Y_2000p.append(IDcode);
-	else if (Year >= 1990)
-		Y_1990p.append(IDcode);
-	else
-		Y_others.append(IDcode);
-}
-
-void cYear::get(int Year, int* &IDcodeList) {
-	if (Year == 2019)
-		Y_2019.travel(IDcodeList);
-	else if (Year == 2018)
-		Y_2018.travel(IDcodeList);
-	else if (Year == 2017)
-		Y_2017.travel(IDcodeList);
-	else if (Year >= 2000)
-		Y_2000p.travel(IDcodeList);
-	else if (Year >= 1990)
-		Y_1990p.travel(IDcodeList);
-	else
-		Y_others.travel(IDcodeList);
-}
-
-int cYear::length(int Year) {
-	if (Year == 2019)
-		return Y_2019.length ();
-	else if (Year == 2018)
-		return Y_2018.length();
-	else if (Year == 2017)
-		return Y_2017.length();
-	else if (Year >= 2000)
-		return Y_2000p.length();
-	else if (Year >= 1990)
-		return Y_1990p.length();
-	else
-		return Y_others.length();
-}
-cYear YEAR;
-
-
-class cNation
-{
-private:
-	lnkList<int> China;
-	lnkList<int> America;
-	lnkList<int> Europe;
-	lnkList<int> TW_HK_MC;
-	lnkList<int> JP_SK;
-public:
-	cNation();
-	~cNation();
-
-};
 class Movie {
 private:
 	char name_CHN[256];
@@ -180,6 +108,8 @@ public:
 		click = 0;
 		YEAR.push(IDcode, getDate_yy());
 		TYPE.push(IDcode, Type_char);
+		NATION.push(IDcode, Nation_char);
+		DIRECTOR.push(IDcode, Director_char);
 
 	}
 	char* GetName_CHN() {
@@ -298,7 +228,9 @@ bool GetData() {//从数据库读取数据
 		while (flag = fscanf(fp, "%[^,],%[^,],%[^,],%f,%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^,],%[^\n]\n",
 			name_chn, name_eng, date, &DB, award, Nation, Type, Director, Actor, Language, story, comment) != -1) {
 			int index = ELFhash(name_chn);
+			//cout << "index = " << index << endl;
 			while (MOVIE[index]) {
+				
 				index++;
 			}
 			MOVIE[index] = new  Movie(name_chn, name_eng, date, &DB, award, Nation, Type, Director, Actor, Language, story, comment, index);
@@ -309,50 +241,103 @@ bool GetData() {//从数据库读取数据
 	return true;
 }
 
-bool YearList(int Year) {
-	int len = YEAR.length(Year);
+bool GetMovieList(cClass Class,char* info) {
+	int len = Class.length(info);
+	cout << "命中结果 " << len << " 个" << endl;
 	if (len)
 	{
-		cout << "len = " << len << endl;
-		int* YList = new int[len];
-		YEAR.get(Year, YList);
+		int* TList = new int[len];
+		Class.get(info, TList);
 		for (int i = 0; i < len; i++)
 		{
-			ShowMovie(YList[i]);
+			ShowMovie(TList[i]);
 		}
+		delete TList;
 		return true;
 
 	}
 	return false;
 }
 
+bool YearList(int Year) {
+	int len = YEAR.length(Year);
+	cout << "命中结果 " << len << " 个" << endl;
+	if (len)
+	{
+		int* TList = new int[len];
+		YEAR.get(Year, TList);
+		for (int i = 0; i < len; i++)
+		{
+			ShowMovie(TList[i]);
+		}
+		delete TList;
+		return true;
+
+	}
+	return false;
+}
 
 bool TypeList(char* tpye) {
 	int len = TYPE.length(tpye);
+	cout << "命中结果 " << len << " 个" << endl;
 	if (len)
 	{
-		cout << "len = " << len << endl;
 		int* TList = new int[len];
 		TYPE.get(tpye, TList);
 		for (int i = 0; i < len; i++)
 		{
 			ShowName(TList[i]);
 		}
+		delete TList;
 		return true;
 
 	}
 	return false;
 }
+
+bool NationList(char* tpye) {
+	int len = NATION.length(tpye);
+	cout << "命中结果 " << len << " 个"<< endl;
+	if (len)
+	{
+		int* TList = new int[len];
+		NATION.get(tpye, TList);
+		for (int i = 0; i < len; i++)
+		{
+			ShowName(TList[i]);
+		}
+		delete TList;
+		return true;
+
+	}
+	return false;
+}
+
 int main() {
 	
 	if (!GetData())
 		return 1;
+	
 	char search[256] = { "头号玩家" };
+	cout << "搜索：“"<< search << "”\n";
 	ShowMovie(search); 
-	YearList(2018);
-	char type[32] = { "科幻" };
-	cout << type <<  ELFhash(type) << endl;
+
+	int year = 2018;
+	cout << "搜索："<< year <<"年的电影\n";
+	YearList(year);
+
+	char type[32] = { "战争" };
+	cout << "搜索：类型为“" << type << "”的电影\n";
 	TypeList(type);
+
+	char nation[32] = { "中国" };
+	cout << "搜索：地区为“" << nation << "”的电影\n";
+	NationList(nation);
+
+	char DD[32] = { "林超贤" };
+	cout << "搜索：导演为“" << DD << "”的电影\n";
+	GetMovieList(DIRECTOR,DD);
+
 	system("pause");
 	return 0;
 }

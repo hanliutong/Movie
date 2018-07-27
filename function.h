@@ -34,4 +34,5 @@ void char_split(char Award[], lnkList<char*> &LnkList) {
 
 	}
 }
+
 #endif//FUNCTION_H

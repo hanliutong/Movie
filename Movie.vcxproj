@@ -113,6 +113,9 @@
     <ClInclude Include="Link.h" />
     <ClInclude Include="cType.h" />
     <ClInclude Include="function.h" />
+    <ClInclude Include="cYear.h" />
+    <ClInclude Include="cNation.h" />
+    <ClInclude Include="cClass.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Movie.rc" />

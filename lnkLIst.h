@@ -4,11 +4,14 @@
 #define DS_LNKLIST_H
 
 #include "Link.h"
+//#include <iostream>
+//using namespace std;
 template <class T>
 class lnkList {
 private:  Link<T> *head, *tail;//头指针和尾指针
 		  Link<T> *setPos(const int p); //找第p个结点
 public: lnkList();     //构造函数
+		lnkList(T value);		//给定头节点的构造函数
 		~lnkList();     //析构函数
 		bool  isEmpty();   //判空
 		void  clear();     //清空
@@ -20,7 +23,10 @@ public: lnkList();     //构造函数
 		bool  getPos(int &p, T value);
 		void  travel();
 		void  travel(T* &List);
+		void  travel_p(T  **List);
+		T getHead();
 };
+
 template <class T>
 void  lnkList<T>::travel(T* &List) {
 	Link<T> *current = head->next;
@@ -28,6 +34,17 @@ void  lnkList<T>::travel(T* &List) {
 	while (current)
 	{
 		List[temp_index] = current->data;
+		temp_index++;
+		current = current->next;
+	}
+}
+template <class T>
+void  lnkList<T>::travel_p(T** List){
+	Link<T> *current = head->next;
+	int temp_index = 0;
+	while (current)
+	{
+		List[temp_index] = &(current->data);
 		temp_index++;
 		current = current->next;
 	}
@@ -47,6 +64,12 @@ lnkList<T>::~lnkList() {     //析构函数
 		head = head->next;
 		delete tmp;
 	}
+}
+
+template <class T>
+lnkList<T>::lnkList(T value) {    //给定头节点的构造函数
+						   // Link<T>* p;
+	head = tail = new Link<T>(value,NULL);
 }
 
 template<class T>
@@ -174,7 +197,10 @@ void lnkList<T> ::travel() {
 	}
 	cout << endl;
 }
-
+template <class T>
+T lnkList<T> ::getHead() {
+	return head->data;
+}
 
 #endif //DS_LNKLIST_H
 
