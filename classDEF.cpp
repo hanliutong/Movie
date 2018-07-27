@@ -261,7 +261,7 @@ bool GetMovieList(cClass Class,char* info) {
 		Class.get(info, TList);
 		for (int i = 0; i < len; i++)
 		{
-			ShowMovie(TList[i]);
+			ShowName(TList[i]);
 		}
 		delete TList;
 		return true;
@@ -278,7 +278,7 @@ bool GetMovieList(int Year) {
 		YEAR.get(Year, TList);
 		for (int i = 0; i < len; i++)
 		{
-			ShowMovie(TList[i]);
+			ShowName(TList[i]);
 		}
 		delete TList;
 		return true;
@@ -298,7 +298,7 @@ void GetMovieList(int Douban_d, int Douban_u) {
 			DOUBAN.get(i, TList);
 			for (int i = 0; i < len; i++)
 			{
-				ShowMovie(TList[i]);
+				ShowName(TList[i]);
 			}
 			delete TList;
 			
