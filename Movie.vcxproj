@@ -116,6 +116,7 @@
     <ClInclude Include="cYear.h" />
     <ClInclude Include="cNation.h" />
     <ClInclude Include="cClass.h" />
+    <ClInclude Include="cDouban.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Movie.rc" />
