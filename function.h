@@ -6,12 +6,16 @@ int ELFhash(const char *key)//中文char*所用的哈希函数
 {
 	unsigned long h = 0;
 	unsigned long g;
+	const char blank = ' ';
 	while (*key)
 	{
-		h = (h << 4) + *key++;
-		g = h & 0xf0000000L;
-		if (g) h ^= g >> 24;
-		h &= ~g;
+		if (*key == blank) *key++;
+		else{
+			h = (h << 4) + *key++;
+			g = h & 0xf0000000L;
+			if (g) h ^= g >> 24;
+			h &= ~g;
+		}
 	}
 	return h % 10000;
 }

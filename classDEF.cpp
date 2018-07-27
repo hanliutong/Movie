@@ -1,9 +1,8 @@
 #include<iostream>
 #include"lnkList.h"
 #include"function.h"
-#include"cType.h"
+#include"cDouban.h"
 #include"cYear.h"
-#include"cNation.h"
 #include"cClass.h"
 using namespace std;
 /*	*数据结构:
@@ -20,10 +19,18 @@ using namespace std;
 */
 
 
-cType TYPE;
+//cType TYPE;
+//cYear YEAR;
+//cNation NATION;
+
 cYear YEAR;
-cNation NATION;
+cDouban DOUBAN;
+cClass NATION;
+cClass TYPE;
 cClass DIRECTOR;
+cClass AWARD;
+cClass ACTOR;
+cClass LANGUAGE;
 
 class cDate {//Movie类中存储日期的类
 public:
@@ -110,6 +117,10 @@ public:
 		TYPE.push(IDcode, Type_char);
 		NATION.push(IDcode, Nation_char);
 		DIRECTOR.push(IDcode, Director_char);
+		AWARD.push(IDcode, Award_char);
+		ACTOR.push(IDcode, Actor_char);
+		LANGUAGE.push(IDcode, Language_char);
+		DOUBAN.push(IDcode, DouBan);
 
 	}
 	char* GetName_CHN() {
@@ -250,16 +261,15 @@ bool GetMovieList(cClass Class,char* info) {
 		Class.get(info, TList);
 		for (int i = 0; i < len; i++)
 		{
-			ShowMovie(TList[i]);
+			ShowName(TList[i]);
 		}
 		delete TList;
 		return true;
-
 	}
 	return false;
 }
 
-bool YearList(int Year) {
+bool GetMovieList(int Year) {
 	int len = YEAR.length(Year);
 	cout << "命中结果 " << len << " 个" << endl;
 	if (len)
@@ -268,50 +278,35 @@ bool YearList(int Year) {
 		YEAR.get(Year, TList);
 		for (int i = 0; i < len; i++)
 		{
-			ShowMovie(TList[i]);
-		}
-		delete TList;
-		return true;
-
-	}
-	return false;
-}
-
-bool TypeList(char* tpye) {
-	int len = TYPE.length(tpye);
-	cout << "命中结果 " << len << " 个" << endl;
-	if (len)
-	{
-		int* TList = new int[len];
-		TYPE.get(tpye, TList);
-		for (int i = 0; i < len; i++)
-		{
 			ShowName(TList[i]);
 		}
 		delete TList;
 		return true;
-
 	}
 	return false;
 }
 
-bool NationList(char* tpye) {
-	int len = NATION.length(tpye);
-	cout << "命中结果 " << len << " 个"<< endl;
-	if (len)
+
+void GetMovieList(int Douban_d, int Douban_u) {
+
+	for (int i = Douban_d;i < Douban_u; i++)
 	{
-		int* TList = new int[len];
-		NATION.get(tpye, TList);
-		for (int i = 0; i < len; i++)
+		int len = DOUBAN.length(i);
+		if (len)
 		{
-			ShowName(TList[i]);
+			int* TList = new int[len];
+			DOUBAN.get(i, TList);
+			for (int i = 0; i < len; i++)
+			{
+				ShowName(TList[i]);
+			}
+			delete TList;
+			
 		}
-		delete TList;
-		return true;
-
+		
 	}
-	return false;
 }
+
 
 int main() {
 	
@@ -324,20 +319,28 @@ int main() {
 
 	int year = 2018;
 	cout << "搜索："<< year <<"年的电影\n";
-	YearList(year);
+	GetMovieList(year);
 
 	char type[32] = { "战争" };
 	cout << "搜索：类型为“" << type << "”的电影\n";
-	TypeList(type);
+	GetMovieList(TYPE, type);
 
-	char nation[32] = { "中国" };
+	char nation[32] = { "中国大陆" };
 	cout << "搜索：地区为“" << nation << "”的电影\n";
-	NationList(nation);
+	GetMovieList(NATION, nation);
 
-	char DD[32] = { "林超贤" };
-	cout << "搜索：导演为“" << DD << "”的电影\n";
-	GetMovieList(DIRECTOR,DD);
+	char director[32] = { "林超贤" };
+	cout << "搜索：导演为“" << director << "”的电影\n";
+	GetMovieList(DIRECTOR, director);
+	
+	char actor[32] = { "马克·里朗斯" };
+	cout << "搜索：演员为“" << actor << "”的电影\n";
+	GetMovieList(ACTOR, actor);
 
+	int DB_d = 6;
+	int DB_u = 8;
+	cout << "搜索：DB在 " << DB_d << " (含)到 " << DB_u << " (不含)之间的电影\n";
+	GetMovieList(DB_d, DB_u);
 	system("pause");
 	return 0;
 }

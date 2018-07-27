@@ -12,7 +12,7 @@ private:  Link<T> *head, *tail;//头指针和尾指针
 		  Link<T> *setPos(const int p); //找第p个结点
 public: lnkList();     //构造函数
 		lnkList(T value);		//给定头节点的构造函数
-		~lnkList();     //析构函数
+		~lnkList() {};     //析构函数
 		bool  isEmpty();   //判空
 		void  clear();     //清空
 		int  length();     //求表长
@@ -56,15 +56,15 @@ lnkList<T>::lnkList() {    //构造函数
 	head = tail = new Link<T>;
 }
 
-template <class T>
-lnkList<T>::~lnkList() {     //析构函数
-	Link<T> *tmp;
-	while (head != NULL) {
-		tmp = head;
-		head = head->next;
-		delete tmp;
-	}
-}
+//template <class T>
+//lnkList<T>::~lnkList() {     //析构函数
+//	Link<T> *tmp;
+//	while (head != NULL) {
+//		tmp = head;
+//		head = head->next;
+//		delete tmp;
+//	}
+//}
 
 template <class T>
 lnkList<T>::lnkList(T value) {    //给定头节点的构造函数
