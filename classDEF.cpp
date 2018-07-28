@@ -4,6 +4,7 @@
 #include"cDouban.h"
 #include"cYear.h"
 #include"cClass.h"
+#include"movie.h"
 using namespace std;
 /*	*数据结构:
 	*类或对象：
@@ -31,152 +32,8 @@ cClass DIRECTOR;
 cClass AWARD;
 cClass ACTOR;
 cClass LANGUAGE;
-
-class cDate {//Movie类中存储日期的类
-public:
-	int yy;
-	int mm;
-	int dd;
-	cDate() {
-		yy = 0;
-		mm = 0;
-		dd = 0;
-	}
-	cDate(char* sDate) {
-
-		int index = 0;
-		char* syy = new char;
-		char* smm = new char;
-		char* sdd = new char;
-		while (sDate[index] != '/') {
-			syy[index] = sDate[index];
-			index++;
-		}
-		yy = atoi(syy);
-		delete syy;
-		index++;
-		while (sDate[index] != '/') {
-			smm[index - 5] = sDate[index];
-			index++;
-		}
-		mm = atoi(smm);
-		delete smm;
-		index++;
-		int count = 0;
-		while (sDate[index]) {
-			sdd[count++] = sDate[index];
-			index++;
-		}
-		dd = atoi(sdd);
-		delete sdd;
-	}
-};
-
-class Movie {
-private:
-	char name_CHN[256];
-	char name_ENG[256];
-	int IDcode;
-	cDate Date;
-	float DouBan;
-	char Award_char[256];
-	char Nation_char[256];
-	char Type_char[256];
-	char Director_char[256];
-	char Actor_char[256];
-	char Language_char[256];
-	char Story[1024];
-	char Comment[1024];
-
-	int click;
-
-
-	//lnkList<char*> AwardList;
-	//lnkList<char*> NationList;
-
-public:
-	Movie() {
-		IDcode = 0;
-	}
-	Movie(char *name_C, char *name_E, char* date, float* DB, char *Award, char *Nation, char *Type, char *Director, char *Actor, char *Language, char *story, char *comment,int ID) {
-		strcpy(name_CHN, name_C);
-		strcpy(name_ENG, name_E);
-		strcpy(Award_char, Award);
-		strcpy(Nation_char, Nation);
-		strcpy(Type_char, Type);
-		strcpy(Director_char, Director);
-		strcpy(Actor_char, Actor);
-		strcpy(Language_char, Language);
-		strcpy(Story, story);
-		strcpy(Comment, comment);
-		IDcode = ID;
-		Date = cDate(date);
-		DouBan = *DB;
-		click = 0;
-		YEAR.push(IDcode, getDate_yy());
-		TYPE.push(IDcode, Type_char);
-		NATION.push(IDcode, Nation_char);
-		DIRECTOR.push(IDcode, Director_char);
-		AWARD.push(IDcode, Award_char);
-		ACTOR.push(IDcode, Actor_char);
-		LANGUAGE.push(IDcode, Language_char);
-		DOUBAN.push(IDcode, DouBan);
-
-	}
-	char* GetName_CHN() {
-		return name_CHN;
-	}
-
-	int GetID() {
-		return IDcode;
-	}
-	int getDate_yy() {
-		return Date.yy;
-	}
-
-	int getDate_mm() {
-		return Date.mm;
-	}
-
-	int getDate_dd() {
-		return Date.dd;
-	}
-	int getDate() {
-		return Date.yy * 10000 + Date.mm * 100 + Date.dd;
-	}
-	float getDB() {
-		return DouBan;
-	}
-	char* getAward() {
-		return Award_char;
-	}
-	char* getNation() {
-		return Nation_char;
-	}
-	char* getType() {
-		return Type_char;
-	}
-	char* getDirector() {
-		return Director_char;
-	}
-	char* getActor() {
-		return Actor_char;
-	}
-	char* getLanguage() {
-		return Language_char;
-	}
-	char* getStory() {
-		return Story;
-	}
-	char* getComment() {
-		return Comment;
-	}
-	int getclick() {
-		return click;
-	}
-};
 Movie* MOVIE[10000];
-
+int a = 10;
 
 
 // };
@@ -337,8 +194,8 @@ int main() {
 	cout << "搜索：演员为“" << actor << "”的电影\n";
 	GetMovieList(ACTOR, actor);
 
-	int DB_d = 6;
-	int DB_u = 8;
+	int DB_d = 7;
+	int DB_u = 9;
 	cout << "搜索：DB在 " << DB_d << " (含)到 " << DB_u << " (不含)之间的电影\n";
 	GetMovieList(DB_d, DB_u);
 	system("pause");

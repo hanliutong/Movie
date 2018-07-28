@@ -47,6 +47,12 @@
     <ClInclude Include="cDouban.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="cDate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="movie.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Movie.rc">

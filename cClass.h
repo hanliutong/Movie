@@ -24,7 +24,7 @@ void cClass::push(int IDcode, char* Name) {
 		for (int i = 0; i < len; i++)
 		{
 			char *tempNode = new char[32];
-			tempList.getValue(i, tempNode);
+			tempList.getValue(i+1, tempNode);
 			int tempClass = ELFhash(tempNode);
 			int pos = 0;
 			lnkList<int>* Name = Find(tempClass);

@@ -25,6 +25,7 @@ public: lnkList();     //构造函数
 		void  travel(T* &List);
 		void  travel_p(T  **List);
 		T getHead();
+		Link<T>* Head();
 };
 
 template <class T>
@@ -75,8 +76,8 @@ lnkList<T>::lnkList(T value) {    //给定头节点的构造函数
 template<class T>
 Link<T>* lnkList<T> ::setPos(int i) {
 	int count = 0;
-	if (i <= -1) return head; //返回头结点指针
-	Link<T> *p = head->next;  //p指向第一个数据结点
+	if (i <= 0) return head; //返回头结点指针
+	Link<T> *p = head;  //p指向第一个数据结点
 	while (p != NULL && count < i) {      //T(n)=O(n)
 		p = p->next;
 		count++;
@@ -158,7 +159,7 @@ bool lnkList<T> ::getValue(int p, T& value) {
 		l = l->next;
 		count++;
 	}
-	if (p < 0 || p >(count - 1))
+	if (p < 0 || p >count)
 	{
 		//cout << "illgeal 'p':";
 		return 0;
@@ -202,6 +203,11 @@ T lnkList<T> ::getHead() {
 	return head->data;
 }
 
+
+template <class T>
+Link<T>* lnkList<T> ::Head() {
+	return head;
+}
 #endif //DS_LNKLIST_H
 
 // UTF-8

@@ -117,6 +117,8 @@
     <ClInclude Include="cNation.h" />
     <ClInclude Include="cClass.h" />
     <ClInclude Include="cDouban.h" />
+    <ClInclude Include="cDate.h" />
+    <ClInclude Include="movie.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Movie.rc" />
