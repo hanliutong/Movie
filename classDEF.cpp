@@ -146,7 +146,7 @@ bool GetMovieList(int Year) {
 
 void GetMovieList(int Douban_d, int Douban_u) {
 
-	for (int i = Douban_d;i < Douban_u; i++)
+	for (int i = Douban_u -1 ;i >= Douban_d; i--)
 	{
 		int len = DOUBAN.length(i);
 		if (len)

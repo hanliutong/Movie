@@ -1,26 +1,15 @@
-#include<iostream>
+#include<stdio.h>
 //#include"lnkList.h"
-using namespace std;
-int ELFhash(const char *key)
-{
-    unsigned long h = 0;
-    unsigned long g;
-    while( *key )
-    {
-        h =( h<< 4) + *key++;
-        g = h & 0xf0000000L;
-        if( g ) h ^= g >> 24;
-        h &= ~g;
-    }
-    return h%10000;
+//using namespace std;
+void fct(int x ){
+	printf("in fct : x = %d\n",x );
+
 }
 
 int main(){
-	while(1){
-	char temp[64];
-	cin >> temp;
-	cout << ELFhash(temp) <<endl;
-	}
-	system("pause");
+	int x = 10;
+	printf("x = %i\n",x );
+	fct(x+++5);
+	printf("x = %i\n",x );
 	return 0;
 } 

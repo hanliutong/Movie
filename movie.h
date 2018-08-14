@@ -59,7 +59,7 @@ public:
 		Date = cDate(date);
 		DouBan = *DB;
 		click = 0;
-		YEAR.push(IDcode, getDate_yy());
+		YEAR.push(IDcode, getDate_yy(),getDate());
 		TYPE.push(IDcode, Type_char);
 		NATION.push(IDcode, Nation_char);
 		DIRECTOR.push(IDcode, Director_char);

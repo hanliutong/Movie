@@ -39,10 +39,8 @@ private:
 void cDouban::push(int IDcode, float Douban) {
 	if (Douban >= 9)
 		DB_9.Insert(position(&DB_9, Douban), DB_Node(Douban,IDcode));
-	else if (Douban >= 8) {
+	else if (Douban >= 8)
 		DB_8.Insert(position(&DB_8, Douban), DB_Node(Douban, IDcode));
-		
-	}
 	else if (Douban >= 7)
 		DB_7.Insert(position(&DB_7, Douban), DB_Node(Douban, IDcode));
 	else if (Douban >= 6)
@@ -115,13 +113,11 @@ int cDouban::position(lnkList<DB_Node> *DB_n, float Douban) {
 	Link<DB_Node> *current = DB_n->Head();
 	int pos = 1;
 	while (current->next) {
-		std::cout << "data = " << current->next->data.DB << "Douban = " << Douban << endl;
 		if (current->next->data.DB < Douban)
 			break;
 		pos++;
 		current = current->next;
 	}
-	std::cout << "pos = " << pos << endl;
 	return pos;
 }
 #endif//CBOUBAN_H
