@@ -21,6 +21,7 @@ public:
 	cDouban() {};
 	void push(int IDcode, float Douban);
 	void get(int Douban, int* &IDcodeList);
+	void get(int Douban, int* &IDcodeList, int len);
 	//void get(int Douban_d, int Douban_u, int* &IDcodeList);
 	int  length(int Douban);     //Çó±í³¤
 
@@ -59,7 +60,7 @@ void cDouban::push(int IDcode, float Douban) {
 }
 
 void cDouban::get(int Douban, int* &IDcodeList) {
-	DB_Node *DB_Node_LIST = new DB_Node[100];
+	DB_Node *DB_Node_LIST = new DB_Node[200];
 	if (Douban >= 9)
 		DB_9.travel(DB_Node_LIST);
 	else if (Douban >= 8)
@@ -78,7 +79,7 @@ void cDouban::get(int Douban, int* &IDcodeList) {
 		DB_2.travel(DB_Node_LIST);
 	else
 		DB_1.travel(DB_Node_LIST);
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 200; i++)
 	{
 		if (DB_Node_LIST[i].ID == -1)
 			break;
@@ -87,6 +88,34 @@ void cDouban::get(int Douban, int* &IDcodeList) {
 	delete DB_Node_LIST;
 }
 
+void cDouban::get(int Douban, int* &IDcodeList, int len) {
+	DB_Node *DB_Node_LIST = new DB_Node[len];
+	if (Douban >= 9)
+		DB_9.travel(DB_Node_LIST);
+	else if (Douban >= 8)
+		DB_8.travel(DB_Node_LIST);
+	else if (Douban >= 7)
+		DB_7.travel(DB_Node_LIST);
+	else if (Douban >= 6)
+		DB_6.travel(DB_Node_LIST);
+	else if (Douban >= 5)
+		DB_5.travel(DB_Node_LIST);
+	else if (Douban >= 4)
+		DB_4.travel(DB_Node_LIST);
+	else if (Douban >= 3)
+		DB_3.travel(DB_Node_LIST);
+	else if (Douban >= 2)
+		DB_2.travel(DB_Node_LIST);
+	else
+		DB_1.travel(DB_Node_LIST);
+	for (int i = 0; i < len; i++)
+	{
+		if (DB_Node_LIST[i].ID == -1)
+			break;
+		IDcodeList[i] = DB_Node_LIST[i].ID;
+	}
+	delete DB_Node_LIST;
+}
 
 int cDouban::length(int Douban) {
 	if (Douban >= 9)
